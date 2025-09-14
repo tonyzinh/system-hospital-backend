@@ -28,7 +28,7 @@ Existem duas formas de executar o projeto: localmente com um ambiente virtual Py
 
   - Python 3.10+
   - Git
-  - Docker e Docker Compose (para o método com Docker)
+  - Docker e Docker Compose (caso queira executar com Docker)
 
 ### 1\. Configuração com Docker (Recomendado)
 

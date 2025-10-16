@@ -64,14 +64,6 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-> **💡 Dica para PyTorch**: Para acelerar a instalação ou usar GPU, instale o PyTorch apropriado primeiro:
-> ```bash
-> # CPU apenas
-> pip install torch --index-url https://download.pytorch.org/whl/cpu
-> # CUDA 12.1 (exemplo)
-> pip install torch --index-url https://download.pytorch.org/whl/cu121
-> ```
-
 ### 4. Configurar Variáveis de Ambiente
 
 Crie um arquivo `.env` na raiz do projeto:

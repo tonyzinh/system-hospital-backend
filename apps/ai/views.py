@@ -1,20 +1,70 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .rag import answer, rebuild_index
-from .ingestion_web import ingest_url_to_txt
-from .serializers import IngestUrlSerializer
+from .ollama_client import chat_completion, OllamaError
+
+
+class AiChatView(APIView):
+    """
+    POST /api/v1/ai/chat
+    body:
+    {
+      "question": "texto do usuário",
+      "history": [{"role":"user","content":"..."}, {"role":"assistant","content":"..."}],  # opcional
+      "model": "llama3.1"    # opcional
+    }
+    """
+
+    def post(self, request):
+        data = request.data or {}
+        q = (data.get("question") or "").strip()
+        history = data.get("history") or []
+        model = data.get("model")
+
+        if not q:
+            return Response(
+                {"detail": "question é obrigatório."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Monta mensagens válidas a partir do histórico
+        messages = []
+        if isinstance(history, list):
+            for m in history:
+                if (
+                    isinstance(m, dict)
+                    and m.get("role") in {"user", "assistant", "system"}
+                    and m.get("content")
+                ):
+                    messages.append({"role": m["role"], "content": m["content"]})
+
+        # Pergunta atual no final
+        messages.append({"role": "user", "content": q})
+
+        try:
+            answer = chat_completion(messages, model=model)
+            return Response({"answer": answer})
+        except OllamaError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_502_BAD_GATEWAY)
+
 
 class AiAnswerView(APIView):
-    def post(self, request):
-        q = request.data.get("question", "")
-        return Response({"answer": answer(q)})
+    """
+    POST /api/v1/ai/answer
+    body: { "question": "..." }
+    """
 
-class AiIngestUrlView(APIView):
     def post(self, request):
-        s = IngestUrlSerializer(data=request.data)
-        s.is_valid(raise_exception=True)
-        url = s.validated_data["url"]
-        paths = ingest_url_to_txt(url)
-        n = rebuild_index()
-        return Response({"ok": True, "chunks_created": len(paths), "total_docs": n}, status=status.HTTP_201_CREATED)
+        data = request.data or {}
+        q = (data.get("question") or "").strip()
+        if not q:
+            return Response(
+                {"detail": "question é obrigatório."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            answer = chat_completion([{"role": "user", "content": q}])
+            return Response({"answer": answer})
+        except OllamaError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_502_BAD_GATEWAY)

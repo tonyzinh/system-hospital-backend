@@ -1,0 +1,878 @@
+[
+  {
+    "model": "core.user",
+    "pk": 1,
+    "fields": {
+      "username": "dr.silva",
+      "email": "silva@hospital.com",
+      "first_name": "Ana",
+      "last_name": "Silva",
+      "role": "medico",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-15T08:00:00Z"
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 2,
+    "fields": {
+      "username": "enf.santos",
+      "email": "santos@hospital.com",
+      "first_name": "Carlos",
+      "last_name": "Santos",
+      "role": "enfermeiro",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-02-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 3,
+    "fields": {
+      "username": "dr.oliveira",
+      "email": "oliveira@hospital.com",
+      "first_name": "Roberto",
+      "last_name": "Oliveira",
+      "role": "medico",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-20T08:00:00Z"
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 4,
+    "fields": {
+      "username": "farm.costa",
+      "email": "costa@hospital.com",
+      "first_name": "Julia",
+      "last_name": "Costa",
+      "role": "farmaceutico",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-02-10T08:00:00Z"
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 5,
+    "fields": {
+      "username": "admin.lima",
+      "email": "lima@hospital.com",
+      "first_name": "Fernando",
+      "last_name": "Lima",
+      "role": "administrador",
+      "is_staff": true,
+      "is_superuser": true,
+      "is_active": true,
+      "date_joined": "2024-01-01T08:00:00Z"
+    }
+  },
+  {
+    "model": "patients.hospital",
+    "pk": 1,
+    "fields": {
+      "name": "Hospital Central de São Paulo",
+      "city": "São Paulo"
+    }
+  },
+  {
+    "model": "patients.hospital",
+    "pk": 2,
+    "fields": {
+      "name": "Hospital Santa Casa",
+      "city": "Rio de Janeiro"
+    }
+  },
+  {
+    "model": "patients.hospital",
+    "pk": 3,
+    "fields": {
+      "name": "Hospital Regional",
+      "city": "Belo Horizonte"
+    }
+  },
+  {
+    "model": "patients.department",
+    "pk": 1,
+    "fields": {
+      "hospital": 1,
+      "name": "Clínica Geral"
+    }
+  },
+  {
+    "model": "patients.department",
+    "pk": 2,
+    "fields": {
+      "hospital": 1,
+      "name": "Cardiologia"
+    }
+  },
+  {
+    "model": "patients.department",
+    "pk": 3,
+    "fields": {
+      "hospital": 1,
+      "name": "Pediatria"
+    }
+  },
+  {
+    "model": "patients.department",
+    "pk": 4,
+    "fields": {
+      "hospital": 1,
+      "name": "Emergência"
+    }
+  },
+  {
+    "model": "patients.department",
+    "pk": 5,
+    "fields": {
+      "hospital": 1,
+      "name": "Ortopedia"
+    }
+  },
+  {
+    "model": "patients.department",
+    "pk": 6,
+    "fields": {
+      "hospital": 2,
+      "name": "Neurologia"
+    }
+  },
+  {
+    "model": "patients.patient",
+    "pk": 1,
+    "fields": {
+      "full_name": "Maria Silva Santos",
+      "birthdate": "1990-05-10",
+      "sex": "F",
+      "document": "12345678900",
+      "contact_json": {
+        "phone": "(11) 99999-9999",
+        "email": "maria.santos@email.com",
+        "address": "Rua das Flores, 123, São Paulo, SP",
+        "emergency_contact": "João Santos - (11) 98888-7777"
+      }
+    }
+  },
+  {
+    "model": "patients.patient",
+    "pk": 2,
+    "fields": {
+      "full_name": "João Pedro Souza",
+      "birthdate": "1987-02-20",
+      "sex": "M",
+      "document": "98765432100",
+      "contact_json": {
+        "phone": "(11) 98888-8888",
+        "email": "joao.souza@email.com",
+        "address": "Av. Paulista, 456, São Paulo, SP",
+        "emergency_contact": "Ana Souza - (11) 97777-6666"
+      }
+    }
+  },
+  {
+    "model": "patients.patient",
+    "pk": 3,
+    "fields": {
+      "full_name": "Ana Carolina Lima",
+      "birthdate": "1995-12-03",
+      "sex": "F",
+      "document": "11122233344",
+      "contact_json": {
+        "phone": "(11) 97777-7777",
+        "email": "ana.lima@email.com",
+        "address": "Rua Augusta, 789, São Paulo, SP",
+        "emergency_contact": "Pedro Lima - (11) 96666-5555"
+      }
+    }
+  },
+  {
+    "model": "patients.patient",
+    "pk": 4,
+    "fields": {
+      "full_name": "Carlos Eduardo Costa",
+      "birthdate": "1982-08-15",
+      "sex": "M",
+      "document": "55566677788",
+      "contact_json": {
+        "phone": "(11) 96666-6666",
+        "email": "carlos.costa@email.com",
+        "address": "Rua da Consolação, 321, São Paulo, SP",
+        "emergency_contact": "Mariana Costa - (11) 95555-4444"
+      }
+    }
+  },
+  {
+    "model": "patients.patient",
+    "pk": 5,
+    "fields": {
+      "full_name": "Isabella Rodrigues",
+      "birthdate": "2010-03-25",
+      "sex": "F",
+      "document": "99988877766",
+      "contact_json": {
+        "phone": "(11) 95555-5555",
+        "email": "contato.isabella@email.com",
+        "address": "Rua Vergueiro, 654, São Paulo, SP",
+        "emergency_contact": "Patricia Rodrigues - (11) 94444-3333"
+      }
+    }
+  },
+  {
+    "model": "patients.patient",
+    "pk": 6,
+    "fields": {
+      "full_name": "Roberto Silva Junior",
+      "birthdate": "1975-11-12",
+      "sex": "M",
+      "document": "33344455566",
+      "contact_json": {
+        "phone": "(11) 94444-4444",
+        "email": "roberto.junior@email.com",
+        "address": "Rua Estados Unidos, 987, São Paulo, SP",
+        "emergency_contact": "Lucia Silva - (11) 93333-2222"
+      }
+    }
+  },
+  {
+    "model": "patients.appointment",
+    "pk": 1,
+    "fields": {
+      "patient": 1,
+      "staff": 1,
+      "scheduled_at": "2024-10-20T09:00:00Z",
+      "status": "scheduled",
+      "type": "consult"
+    }
+  },
+  {
+    "model": "patients.appointment",
+    "pk": 2,
+    "fields": {
+      "patient": 2,
+      "staff": 3,
+      "scheduled_at": "2024-10-20T10:30:00Z",
+      "status": "scheduled",
+      "type": "checkup"
+    }
+  },
+  {
+    "model": "patients.appointment",
+    "pk": 3,
+    "fields": {
+      "patient": 3,
+      "staff": 1,
+      "scheduled_at": "2024-10-21T14:00:00Z",
+      "status": "completed",
+      "type": "follow_up"
+    }
+  },
+  {
+    "model": "patients.appointment",
+    "pk": 4,
+    "fields": {
+      "patient": 4,
+      "staff": 3,
+      "scheduled_at": "2024-10-22T11:15:00Z",
+      "status": "scheduled",
+      "type": "emergency"
+    }
+  },
+  {
+    "model": "patients.appointment",
+    "pk": 5,
+    "fields": {
+      "patient": 5,
+      "staff": 1,
+      "scheduled_at": "2024-10-23T16:30:00Z",
+      "status": "cancelled",
+      "type": "consult"
+    }
+  },
+  {
+    "model": "patients.admission",
+    "pk": 1,
+    "fields": {
+      "patient": 2,
+      "department": 2,
+      "admit_at": "2024-10-15T08:30:00Z",
+      "discharge_at": null,
+      "reason": "Dor no peito e palpitações"
+    }
+  },
+  {
+    "model": "patients.admission",
+    "pk": 2,
+    "fields": {
+      "patient": 4,
+      "department": 4,
+      "admit_at": "2024-10-16T22:15:00Z",
+      "discharge_at": "2024-10-18T14:20:00Z",
+      "reason": "Fratura no braço direito"
+    }
+  },
+  {
+    "model": "patients.admission",
+    "pk": 3,
+    "fields": {
+      "patient": 6,
+      "department": 1,
+      "admit_at": "2024-10-14T10:00:00Z",
+      "discharge_at": "2024-10-16T16:00:00Z",
+      "reason": "Pneumonia"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 1,
+    "fields": {
+      "name": "Paracetamol",
+      "active_ingredient": "Paracetamol",
+      "form": "Comprimido",
+      "strength": "750 mg",
+      "atc_code": "N02BE01"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 2,
+    "fields": {
+      "name": "Ibuprofeno",
+      "active_ingredient": "Ibuprofeno",
+      "form": "Comprimido",
+      "strength": "400 mg",
+      "atc_code": "M01AE01"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 3,
+    "fields": {
+      "name": "Amoxicilina",
+      "active_ingredient": "Amoxicilina",
+      "form": "Cápsula",
+      "strength": "500 mg",
+      "atc_code": "J01CA04"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 4,
+    "fields": {
+      "name": "Losartana",
+      "active_ingredient": "Losartana potássica",
+      "form": "Comprimido",
+      "strength": "50 mg",
+      "atc_code": "C09CA01"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 5,
+    "fields": {
+      "name": "Metformina",
+      "active_ingredient": "Cloridrato de metformina",
+      "form": "Comprimido",
+      "strength": "850 mg",
+      "atc_code": "A10BA02"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 6,
+    "fields": {
+      "name": "Omeprazol",
+      "active_ingredient": "Omeprazol",
+      "form": "Cápsula",
+      "strength": "20 mg",
+      "atc_code": "A02BC01"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 7,
+    "fields": {
+      "name": "Dipirona",
+      "active_ingredient": "Dipirona sódica",
+      "form": "Solução oral",
+      "strength": "500 mg/mL",
+      "atc_code": "N02BB02"
+    }
+  },
+  {
+    "model": "medicaments.medication",
+    "pk": 8,
+    "fields": {
+      "name": "Enalapril",
+      "active_ingredient": "Maleato de enalapril",
+      "form": "Comprimido",
+      "strength": "10 mg",
+      "atc_code": "C09AA02"
+    }
+  },
+  {
+    "model": "medicaments.supplier",
+    "pk": 1,
+    "fields": {
+      "name": "Farmaco Distribuidora Ltda",
+      "cnpj": "12.345.678/0001-90",
+      "contact_json": {
+        "email": "contato@farmaco.com.br",
+        "phone": "(11) 3333-4444",
+        "address": "Rua dos Medicamentos, 100, São Paulo, SP",
+        "contact_person": "Dr. Marcos Pereira"
+      }
+    }
+  },
+  {
+    "model": "medicaments.supplier",
+    "pk": 2,
+    "fields": {
+      "name": "MedSupply Corporation",
+      "cnpj": "98.765.432/0001-10",
+      "contact_json": {
+        "email": "vendas@medsupply.com.br",
+        "phone": "(11) 4444-5555",
+        "address": "Av. da Saúde, 250, São Paulo, SP",
+        "contact_person": "Sra. Carmen Rodriguez"
+      }
+    }
+  },
+  {
+    "model": "medicaments.supplier",
+    "pk": 3,
+    "fields": {
+      "name": "Pharma Brasil S.A.",
+      "cnpj": "11.222.333/0001-44",
+      "contact_json": {
+        "email": "comercial@pharmabrasil.com.br",
+        "phone": "(11) 5555-6666",
+        "address": "Rua da Indústria, 500, São Paulo, SP",
+        "contact_person": "Sr. Ricardo Fernandes"
+      }
+    }
+  },
+  {
+    "model": "medicaments.inventorybatch",
+    "pk": 1,
+    "fields": {
+      "medication": 1,
+      "supplier": 1,
+      "lot_number": "L2025-001",
+      "expiry_date": "2026-06-30",
+      "quantity": 200,
+      "location": "Almoxarifado A1-Prateleira 01",
+      "unit_cost": "1.50"
+    }
+  },
+  {
+    "model": "medicaments.inventorybatch",
+    "pk": 2,
+    "fields": {
+      "medication": 2,
+      "supplier": 1,
+      "lot_number": "L2025-002",
+      "expiry_date": "2026-08-15",
+      "quantity": 150,
+      "location": "Almoxarifado A1-Prateleira 02",
+      "unit_cost": "2.75"
+    }
+  },
+  {
+    "model": "medicaments.inventorybatch",
+    "pk": 3,
+    "fields": {
+      "medication": 3,
+      "supplier": 2,
+      "lot_number": "AMX2025-A",
+      "expiry_date": "2025-12-31",
+      "quantity": 80,
+      "location": "Almoxarifado A2-Prateleira 05",
+      "unit_cost": "8.90"
+    }
+  },
+  {
+    "model": "medicaments.inventorybatch",
+    "pk": 4,
+    "fields": {
+      "medication": 4,
+      "supplier": 3,
+      "lot_number": "LOS2025-B",
+      "expiry_date": "2027-03-20",
+      "quantity": 300,
+      "location": "Almoxarifado A1-Prateleira 08",
+      "unit_cost": "4.20"
+    }
+  },
+  {
+    "model": "medicaments.inventorybatch",
+    "pk": 5,
+    "fields": {
+      "medication": 5,
+      "supplier": 2,
+      "lot_number": "MET2025-C",
+      "expiry_date": "2026-11-10",
+      "quantity": 120,
+      "location": "Almoxarifado A2-Prateleira 12",
+      "unit_cost": "3.80"
+    }
+  },
+  {
+    "model": "medicaments.inventorybatch",
+    "pk": 6,
+    "fields": {
+      "medication": 6,
+      "supplier": 1,
+      "lot_number": "OME2025-D",
+      "expiry_date": "2026-09-05",
+      "quantity": 90,
+      "location": "Almoxarifado A1-Prateleira 15",
+      "unit_cost": "6.50"
+    }
+  },
+  {
+    "model": "medicaments.prescription",
+    "pk": 1,
+    "fields": {
+      "patient": 1,
+      "prescriber": 1,
+      "created_at": "2024-10-16T10:30:00Z",
+      "status": "active"
+    }
+  },
+  {
+    "model": "medicaments.prescription",
+    "pk": 2,
+    "fields": {
+      "patient": 2,
+      "prescriber": 3,
+      "created_at": "2024-10-15T14:20:00Z",
+      "status": "active"
+    }
+  },
+  {
+    "model": "medicaments.prescription",
+    "pk": 3,
+    "fields": {
+      "patient": 3,
+      "prescriber": 1,
+      "created_at": "2024-10-14T09:15:00Z",
+      "status": "completed"
+    }
+  },
+  {
+    "model": "medicaments.prescription",
+    "pk": 4,
+    "fields": {
+      "patient": 4,
+      "prescriber": 3,
+      "created_at": "2024-10-17T16:45:00Z",
+      "status": "active"
+    }
+  },
+  {
+    "model": "medicaments.prescriptionitem",
+    "pk": 1,
+    "fields": {
+      "prescription": 1,
+      "medication": 1,
+      "dose": "750 mg",
+      "frequency": "3 vezes ao dia",
+      "route": "Oral",
+      "duration_days": 7,
+      "notes": "Tomar após as refeições"
+    }
+  },
+  {
+    "model": "medicaments.prescriptionitem",
+    "pk": 2,
+    "fields": {
+      "prescription": 1,
+      "medication": 6,
+      "dose": "20 mg",
+      "frequency": "1 vez ao dia",
+      "route": "Oral",
+      "duration_days": 14,
+      "notes": "Tomar em jejum pela manhã"
+    }
+  },
+  {
+    "model": "medicaments.prescriptionitem",
+    "pk": 3,
+    "fields": {
+      "prescription": 2,
+      "medication": 4,
+      "dose": "50 mg",
+      "frequency": "1 vez ao dia",
+      "route": "Oral",
+      "duration_days": 30,
+      "notes": "Monitorar pressão arterial"
+    }
+  },
+  {
+    "model": "medicaments.prescriptionitem",
+    "pk": 4,
+    "fields": {
+      "prescription": 2,
+      "medication": 8,
+      "dose": "10 mg",
+      "frequency": "2 vezes ao dia",
+      "route": "Oral",
+      "duration_days": 30,
+      "notes": "Manhã e noite"
+    }
+  },
+  {
+    "model": "medicaments.prescriptionitem",
+    "pk": 5,
+    "fields": {
+      "prescription": 3,
+      "medication": 3,
+      "dose": "500 mg",
+      "frequency": "3 vezes ao dia",
+      "route": "Oral",
+      "duration_days": 10,
+      "notes": "Completar todo o ciclo mesmo que melhore"
+    }
+  },
+  {
+    "model": "medicaments.prescriptionitem",
+    "pk": 6,
+    "fields": {
+      "prescription": 4,
+      "medication": 2,
+      "dose": "400 mg",
+      "frequency": "2 vezes ao dia",
+      "route": "Oral",
+      "duration_days": 5,
+      "notes": "Para alívio da dor e inflamação"
+    }
+  },
+  {
+    "model": "medicaments.administration",
+    "pk": 1,
+    "fields": {
+      "patient": 1,
+      "medication": 1,
+      "staff": 2,
+      "prescription_item": 1,
+      "timestamp": "2024-10-16T12:00:00Z",
+      "dose_given": "750 mg",
+      "adverse_event_flag": false,
+      "notes": "Paciente tomou medicação conforme prescrito"
+    }
+  },
+  {
+    "model": "medicaments.administration",
+    "pk": 2,
+    "fields": {
+      "patient": 1,
+      "medication": 6,
+      "staff": 2,
+      "prescription_item": 2,
+      "timestamp": "2024-10-17T07:30:00Z",
+      "dose_given": "20 mg",
+      "adverse_event_flag": false,
+      "notes": "Administrado em jejum"
+    }
+  },
+  {
+    "model": "medicaments.administration",
+    "pk": 3,
+    "fields": {
+      "patient": 2,
+      "medication": 4,
+      "staff": 2,
+      "prescription_item": 3,
+      "timestamp": "2024-10-16T08:00:00Z",
+      "dose_given": "50 mg",
+      "adverse_event_flag": false,
+      "notes": "Primeira dose da manhã"
+    }
+  },
+  {
+    "model": "medicaments.administration",
+    "pk": 4,
+    "fields": {
+      "patient": 4,
+      "medication": 2,
+      "staff": 2,
+      "prescription_item": 6,
+      "timestamp": "2024-10-17T20:00:00Z",
+      "dose_given": "400 mg",
+      "adverse_event_flag": false,
+      "notes": "Dose da noite para dor"
+    }
+  },
+  {
+    "model": "ops.processtask",
+    "pk": 1,
+    "fields": {
+      "entity_type": "inventory",
+      "entity_id": "3",
+      "name": "Verificar validade lote AMX2025-A",
+      "status": "pending",
+      "sla_minutes": 1440,
+      "started_at": null,
+      "completed_at": null,
+      "priority_score": 0.8
+    }
+  },
+  {
+    "model": "ops.processtask",
+    "pk": 2,
+    "fields": {
+      "entity_type": "prescription",
+      "entity_id": "1",
+      "name": "Revisar prescrição de Maria Silva",
+      "status": "completed",
+      "sla_minutes": 240,
+      "started_at": "2024-10-16T11:00:00Z",
+      "completed_at": "2024-10-16T11:30:00Z",
+      "priority_score": 0.6
+    }
+  },
+  {
+    "model": "ops.processtask",
+    "pk": 3,
+    "fields": {
+      "entity_type": "admission",
+      "entity_id": "1",
+      "name": "Processo de admissão - João Pedro",
+      "status": "in_progress",
+      "sla_minutes": 480,
+      "started_at": "2024-10-15T09:00:00Z",
+      "completed_at": null,
+      "priority_score": 0.9
+    }
+  },
+  {
+    "model": "ops.processtask",
+    "pk": 4,
+    "fields": {
+      "entity_type": "inventory",
+      "entity_id": "1",
+      "name": "Reabastecer estoque Paracetamol",
+      "status": "pending",
+      "sla_minutes": 720,
+      "started_at": null,
+      "completed_at": null,
+      "priority_score": 0.7
+    }
+  },
+  {
+    "model": "ops.processtask",
+    "pk": 5,
+    "fields": {
+      "entity_type": "appointment",
+      "entity_id": "3",
+      "name": "Confirmar consulta Ana Carolina",
+      "status": "completed",
+      "sla_minutes": 120,
+      "started_at": "2024-10-21T13:30:00Z",
+      "completed_at": "2024-10-21T13:45:00Z",
+      "priority_score": 0.5
+    }
+  },
+  {
+    "model": "ops.processtask",
+    "pk": 6,
+    "fields": {
+      "entity_type": "discharge",
+      "entity_id": "2",
+      "name": "Processar alta - Carlos Costa",
+      "status": "completed",
+      "sla_minutes": 360,
+      "started_at": "2024-10-18T13:00:00Z",
+      "completed_at": "2024-10-18T14:20:00Z",
+      "priority_score": 0.8
+    }
+  },
+  {
+    "model": "core.auditlog",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "action": "CREATE",
+      "entity": "Prescription",
+      "entity_id": "1",
+      "timestamp": "2024-10-16T10:30:00Z",
+      "diff_json": {
+        "patient": "Maria Silva Santos",
+        "prescriber": "Dr. Ana Silva",
+        "status": "active"
+      }
+    }
+  },
+  {
+    "model": "core.auditlog",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "action": "UPDATE",
+      "entity": "InventoryBatch",
+      "entity_id": "1",
+      "timestamp": "2024-10-16T15:20:00Z",
+      "diff_json": {
+        "quantity": {
+          "old": 200,
+          "new": 195
+        }
+      }
+    }
+  },
+  {
+    "model": "core.auditlog",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "action": "CREATE",
+      "entity": "Admission",
+      "entity_id": "1",
+      "timestamp": "2024-10-15T08:30:00Z",
+      "diff_json": {
+        "patient": "João Pedro Souza",
+        "department": "Cardiologia",
+        "reason": "Dor no peito e palpitações"
+      }
+    }
+  },
+  {
+    "model": "core.auditlog",
+    "pk": 4,
+    "fields": {
+      "user": 5,
+      "action": "UPDATE",
+      "entity": "User",
+      "entity_id": "4",
+      "timestamp": "2024-10-17T09:00:00Z",
+      "diff_json": {
+        "role": {
+          "old": "estagiario",
+          "new": "farmaceutico"
+        }
+      }
+    }
+  },
+  {
+    "model": "core.auditlog",
+    "pk": 5,
+    "fields": {
+      "user": 1,
+      "action": "UPDATE",
+      "entity": "Appointment",
+      "entity_id": "3",
+      "timestamp": "2024-10-21T14:30:00Z",
+      "diff_json": {
+        "status": {
+          "old": "scheduled",
+          "new": "completed"
+        }
+      }
+    }
+  }
+]

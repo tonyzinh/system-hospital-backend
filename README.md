@@ -117,7 +117,6 @@ O servidor estará disponível em: **http://127.0.0.1:8000/**
 | `/api/v1/appointments/` | GET, POST | Gerencia agendamentos |
 | `/api/v1/medications/` | GET, POST | Inventário de medicamentos |
 | `/api/v1/prescriptions/` | GET, POST | Prescrições médicas |
-| `/api/v1/departments/` | GET, POST | Departamentos hospitalares |
 
 ### Autenticação
 

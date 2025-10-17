@@ -1,7 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .ollama_client import chat_completion, OllamaError
+from .ollama_client import chat_completion, OllamaError, clear_cache, get_cache_stats
+from .config import get_optimal_settings
 from pathlib import Path
 import hashlib
 
@@ -35,8 +36,17 @@ class AiChatView(APIView):
         # Pergunta atual no final
         messages.append({"role": "user", "content": q})
 
+        # Otimização baseada na complexidade da pergunta e histórico
+        settings = get_optimal_settings(q, len(history))
+
         try:
-            answer = chat_completion(messages, model=model)
+            answer = chat_completion(
+                messages,
+                model=model,
+                temperature=settings["temperature"],
+                max_tokens=settings["max_tokens"],
+                timeout=settings["timeout"],
+            )
             return Response({"answer": answer})
         except OllamaError as e:
             return Response({"detail": str(e)}, status=status.HTTP_502_BAD_GATEWAY)
@@ -55,7 +65,14 @@ class AiAnswerView(APIView):
             )
 
         try:
-            answer = chat_completion([{"role": "user", "content": q}])
+            # Otimização baseada na complexidade da pergunta
+            settings = get_optimal_settings(q)
+            answer = chat_completion(
+                [{"role": "user", "content": q}],
+                temperature=settings["temperature"],
+                max_tokens=settings["max_tokens"],
+                timeout=settings["timeout"],
+            )
             return Response({"answer": answer})
         except OllamaError as e:
             return Response({"detail": str(e)}, status=status.HTTP_502_BAD_GATEWAY)
@@ -77,8 +94,14 @@ class AiAdvancedAnswerView(APIView):
 
         # Atualmente apenas encaminha para o Ollama; integração RAG será adicionada depois.
         try:
+            # Otimização baseada na complexidade da pergunta
+            settings = get_optimal_settings(question)
             answer = chat_completion(
-                [{"role": "user", "content": question}], model=model
+                [{"role": "user", "content": question}],
+                model=model,
+                temperature=settings["temperature"],
+                max_tokens=settings["max_tokens"],
+                timeout=settings["timeout"],
             )
             return Response({"answer": answer}, status=status.HTTP_200_OK)
         except OllamaError as e:
@@ -117,20 +140,20 @@ class AiIngestUrlView(APIView):
 
 
 class AiCacheStatsView(APIView):
-    """Retorna estatísticas simples de cache (placeholder)."""
+    """Retorna estatísticas do cache."""
 
     def get(self, request):
-        # Implementação mínima; se houver um sistema real de cache, integrar aqui.
-        return Response({"memory_cache": {"size": 0}, "status": "not_implemented"})
+        stats = get_cache_stats()
+        return Response({"memory_cache": stats, "status": "active"})
 
 
 class AiCacheCleanupView(APIView):
-    """Limpa caches — placeholder."""
+    """Limpa caches."""
 
     def post(self, request):
-        # Nenhum cache implementado por enquanto
+        clear_cache()
         return Response(
-            {"message": "Nenhum cache para limpar (placeholder)"},
+            {"message": "Cache limpo com sucesso"},
             status=status.HTTP_200_OK,
         )
 

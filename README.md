@@ -190,22 +190,23 @@ system-hospital-backend/
 ## Endpoints da API
 
 ### Pacientes
-- `GET /api/patients/` - Listar pacientes
-- `POST /api/patients/` - Criar paciente
-- `GET /api/patients/{id}/` - Detalhes do paciente
-- `PUT /api/patients/{id}/` - Atualizar paciente
+
+- `GET /api/v1/patients/` - Listar pacientes
+- `POST /api/v1/patients/` - Criar paciente
+- `GET /api/v1/patients/{id}/` - Detalhes do paciente
+- `PUT /api/v1/patients/{id}/` - Atualizar paciente
 
 ### Medicamentos
-- `GET /api/medicaments/` - Listar medicamentos
-- `POST /api/medicaments/prescription/` - Nova prescrição
+- `GET /api/v1/medicaments/` - Listar medicamentos
+- `POST /api/v1/medicaments/prescription/` - Nova prescrição
 
 ### IA Médica
-- `POST /api/ai/chat/` - Chat com assistente médico
-- `POST /api/ai/diagnosis/` - Sugestões de diagnóstico
+- `POST /api/v1/ai/chat/` - Chat com assistente médico
+- `POST /api/v1/ai/diagnosis/` - Sugestões de diagnóstico
 
 ### Relatórios
-- `GET /api/reports/patients/` - Relatório de pacientes
-- `GET /api/reports/operations/` - Relatório de operações
+- `GET /api/v1/reports/patients/` - Relatório de pacientes
+- `GET /api/v1/reports/operations/` - Relatório de operações
 
 ---
 

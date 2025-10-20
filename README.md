@@ -267,7 +267,6 @@ copies or substantial portions of the Software.
 - [Django Documentation](https://docs.djangoproject.com/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
 - [Ollama Documentation](https://github.com/ollama/ollama)
-- [PyTorch Documentation](https://pytorch.org/docs/)
 
 ---
 

@@ -261,7 +261,6 @@ copies or substantial portions of the Software.
 
 - 📚 **[Repositório no GitHub Backend](https://github.com/tonyzinh/system-hospital-backend)**
 - 📚 **[Repositório no GitHub Frontend](https://github.com/tonyzinh/system-hospital-frontend)**
-- 📖 **[Documentação da API](https://github.com/tonyzinh/system-hospital-backend/wiki)**
 
 ### Documentação Técnica
 - [Django Documentation](https://docs.djangoproject.com/)

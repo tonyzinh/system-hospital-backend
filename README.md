@@ -14,7 +14,7 @@
 O **Sistema Hospitalar Backend** é uma solução completa para gestão de instituições de saúde, desenvolvido com Django e integrando tecnologias de Inteligência Artificial para otimizar processos médicos e administrativos.
 
 ### Link do Vídeo
-Youtube:
+Entrega da C2: https://www.youtube.com/watch?v=onTPYlFxsNk
 
 ### Objetivos
 

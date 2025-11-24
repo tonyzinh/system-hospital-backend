@@ -5,6 +5,8 @@ from .ollama_client import chat_completion, OllamaError, clear_cache, get_cache_
 from .config import get_optimal_settings
 from pathlib import Path
 import hashlib
+import logging
+import time
 
 
 class AiChatView(APIView):
@@ -53,9 +55,13 @@ class AiChatView(APIView):
 
 
 class AiAnswerView(APIView):
-    """Endpoint simples de resposta (compatibilidade)."""
+    """Endpoint simples de resposta (compatibilidade) - Otimizado."""
 
     def post(self, request):
+        import time
+
+        start_time = time.time()
+
         data = request.data or {}
         q = (data.get("question") or "").strip()
         if not q:
@@ -67,21 +73,45 @@ class AiAnswerView(APIView):
         try:
             # Otimização baseada na complexidade da pergunta
             settings = get_optimal_settings(q)
+
+            # Log do início do processamento
+            print(
+                f"[DEBUG] Processando pergunta: '{q[:50]}...' com timeout {settings['timeout']}s"
+            )
+
             answer = chat_completion(
                 [{"role": "user", "content": q}],
                 temperature=settings["temperature"],
                 max_tokens=settings["max_tokens"],
                 timeout=settings["timeout"],
             )
+
+            duration = time.time() - start_time
+            print(f"[DEBUG] Resposta gerada em {duration:.2f}s")
+
             return Response({"answer": answer})
+
         except OllamaError as e:
-            return Response({"detail": str(e)}, status=status.HTTP_502_BAD_GATEWAY)
+            duration = time.time() - start_time
+            error_msg = str(e)
+            print(f"[ERROR] Falha após {duration:.2f}s: {error_msg}")
+
+            # Retorna erro mais detalhado
+            return Response(
+                {
+                    "detail": error_msg,
+                    "duration": f"{duration:.2f}s",
+                    "question_length": len(q),
+                },
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
 
 
 class AiAdvancedAnswerView(APIView):
-    """Endpoint avançado (placeholder) — no momento usa apenas o Ollama para gerar respostas."""
+    """Endpoint avançado com retry e logs detalhados."""
 
     def post(self, request):
+        start_time = time.time()
         data = request.data or {}
         question = (data.get("question") or "").strip()
         model = data.get("model")
@@ -92,23 +122,62 @@ class AiAdvancedAnswerView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Atualmente apenas encaminha para o Ollama; integração RAG será adicionada depois.
-        try:
-            # Otimização baseada na complexidade da pergunta
-            settings = get_optimal_settings(question)
-            answer = chat_completion(
-                [{"role": "user", "content": question}],
-                model=model,
-                temperature=settings["temperature"],
-                max_tokens=settings["max_tokens"],
-                timeout=settings["timeout"],
-            )
-            return Response({"answer": answer}, status=status.HTTP_200_OK)
-        except OllamaError as e:
-            return Response(
-                {"error": "Erro interno no processamento", "details": str(e)},
-                status=status.HTTP_502_BAD_GATEWAY,
-            )
+        print(f"[DEBUG] Advanced: Processando '{question[:50]}...'")
+
+        # Retry logic para melhor resiliência
+        max_retries = 2
+        last_error = None
+
+        for attempt in range(max_retries + 1):
+            try:
+                # Otimização baseada na complexidade da pergunta
+                settings = get_optimal_settings(question)
+
+                # Aumenta timeout para endpoint avançado
+                advanced_timeout = min(settings["timeout"] * 1.5, 180)  # Max 3 min
+
+                print(
+                    f"[DEBUG] Advanced: Tentativa {attempt + 1} com timeout {advanced_timeout}s"
+                )
+
+                answer = chat_completion(
+                    [{"role": "user", "content": question}],
+                    model=model,
+                    temperature=settings["temperature"],
+                    max_tokens=settings["max_tokens"],
+                    timeout=advanced_timeout,
+                )
+
+                duration = time.time() - start_time
+                print(f"[DEBUG] Advanced: Sucesso em {duration:.2f}s")
+
+                return Response({"answer": answer}, status=status.HTTP_200_OK)
+
+            except OllamaError as e:
+                last_error = e
+                duration = time.time() - start_time
+                print(
+                    f"[ERROR] Advanced: Tentativa {attempt + 1} falhou em {duration:.2f}s: {str(e)}"
+                )
+
+                # Se não for a última tentativa, aguarda um pouco
+                if attempt < max_retries:
+                    time.sleep(1)
+                    continue
+                else:
+                    break
+
+        # Se chegou aqui, todas as tentativas falharam
+        final_duration = time.time() - start_time
+        return Response(
+            {
+                "error": "Erro interno no processamento após múltiplas tentativas",
+                "details": str(last_error),
+                "duration": f"{final_duration:.2f}s",
+                "attempts": max_retries + 1,
+            },
+            status=status.HTTP_502_BAD_GATEWAY,
+        )
 
 
 class AiIngestUrlView(APIView):
@@ -163,14 +232,67 @@ class AiHealthCheckView(APIView):
 
     def get(self, request):
         try:
-            # Teste simples: chama uma completition curta
-            test = chat_completion([{"role": "user", "content": "Olá"}])
-            healthy = bool(test)
+            # Teste simples e rápido
+            test = chat_completion(
+                [{"role": "user", "content": "Responda apenas: OK"}],
+                timeout=30,  # 30 segundos para health check
+            )
+            healthy = bool(test and test.strip())
+
             return Response(
-                {"status": "healthy" if healthy else "unhealthy", "ollama_ok": healthy}
+                {
+                    "status": "healthy" if healthy else "unhealthy",
+                    "ollama_ok": healthy,
+                    "response": test[:50] if test else None,
+                    "timestamp": time.time(),
+                }
             )
         except Exception as e:
+            print(f"[ERROR] Health check failed: {str(e)}")
             return Response(
-                {"status": "unhealthy", "error": str(e)},
+                {
+                    "status": "unhealthy",
+                    "error": str(e),
+                    "error_type": type(e).__name__,
+                    "timestamp": time.time(),
+                },
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+    def post(self, request):
+        """Força um teste mais detalhado do Ollama."""
+        try:
+            start_time = time.time()
+
+            # Teste com pergunta simples
+            test = chat_completion(
+                [{"role": "user", "content": "Diga apenas 'Funcionando'"}], timeout=30
+            )
+
+            duration = time.time() - start_time
+            success = bool(test and test.strip())
+
+            if success:
+                return Response(
+                    {
+                        "message": "Ollama testado com sucesso",
+                        "status": "healthy",
+                        "response": test,
+                        "duration": f"{duration:.2f}s",
+                    }
+                )
+            else:
+                return Response(
+                    {
+                        "error": "Resposta vazia do Ollama",
+                        "status": "unhealthy",
+                        "duration": f"{duration:.2f}s",
+                    },
+                    status=status.HTTP_503_SERVICE_UNAVAILABLE,
+                )
+        except Exception as e:
+            duration = time.time() - start_time if "start_time" in locals() else 0
+            return Response(
+                {"error": f"Erro no teste: {str(e)}", "duration": f"{duration:.2f}s"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
